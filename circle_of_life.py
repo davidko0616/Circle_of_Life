@@ -34,7 +34,7 @@ class Zebra(Animal):
         empty = []
         for dx, dy in directions:
             nx, ny = self.x + dx, self.y + dy
-            if 0 <= ny < len(grid) and 0 <= nx len(grid[0]):
+            if 0 <= ny < len(grid) and 0 <= nx < len(grid[0]):
                 if grid[ny][nx] is None:
                     empty.append((nx, ny))
 
