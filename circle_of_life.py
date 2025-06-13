@@ -39,21 +39,13 @@ class Zebra(Animal):
         self.age += 1
 
     def breed(self, grid, animals):
-        self.breed_timer -= 1
-        if self.breed_timer > 0:
-            return
-
-        self.breed_timer = 3  # Reset breeding timer
-        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        random.shuffle(directions)
-
-        for dx, dy in directions:
-            nx, ny = self.x + dx, self.y + dy
-            if 0 <= ny < len(grid) and 0 <= nx < len(grid[0]):
-                if grid[ny][nx] is None:
-                    baby = Zebra(nx, ny)
-                    grid[ny][nx] = baby
-                    animals.append(baby)
+        if self.age >= 3:
+            for dx, dy in [(0,1),(1,0),(0,-1),(-1,0)]:
+                nx, ny = self.x+dx, self.y+dy
+                if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and grid[nx][ny] == AnimalType.EMPTY:
+                    grid[nx][ny] = AnimalType.ZEBRA
+                    animals.append(Zebra(nx, ny))
+                    self.age = 0
                     break
 
 class Lion(Animal):
