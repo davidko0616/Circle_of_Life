@@ -1,9 +1,10 @@
 import random
+import os
 import time
 from enum import Enum
 from typing import List, Tuple, Dict, Any
 
-GRID_SIZE=20
+GRID_SIZE=50
 
 class AnimalType(Enum):
     EMPTY:0
@@ -23,26 +24,19 @@ class Animal:
         raise NotImplementedError
 
 class Zebra(Animal):
-    def __init__(self, x, y):
-        super().__init__(x,y)
-        self.breed_timer = 3
-
     def move(self, grid, animals):
         directions = [(0,1),(1,0),(0,-1),(-1,0)]
-        random.shuffle(directions)
-
-        empty = []
-        for dx, dy in directions:
-            nx, ny = self.x + dx, self.y + dy
-            if 0 <= ny < len(grid) and 0 <= nx < len(grid[0]):
-                if grid[ny][nx] is None:
-                    empty.append((nx, ny))
+        empty = [(self.x+dx, self.y+dy) for dx, dy in directions
+                if 0 <= self.x+dx < GRID_SIZE and 0 <= self.y+dy < GRID_SIZE
+                and grid[self.x+dx][self.y+dy] == AnimalType.EMPTY]
 
         if empty:
             new_x, new_y = random.choice(empty)
-            grid[self.y][self.x] = None
+            grid[self.y][self.x] = AnimalType.EMPTY
             self.x, self.y = new_x, new_y
-            grid[self.y][self.x] = self
+            grid[self.y][self.x] = AnimalType.ZEBRA
+
+        self.age += 1
 
     def breed(self, grid, animals):
         self.breed_timer -= 1
