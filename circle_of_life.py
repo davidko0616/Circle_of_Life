@@ -57,3 +57,22 @@ class Lion(Animal):
         directions = [(0,1),(1,0),(0,-1),(-1,0)]
         prey, empty = [], []
 
+
+def print_grid(grid):
+    for row in grid:
+        print('+' + '---+' * GRID_SIZE)
+        print('|' + '|'.join(f' {cell.name[0] if cell != AnimalType.EMPTY else " "} ' for cell in row) + '|')
+    print('+' + '---+' * GRID_SIZE)
+
+def main():
+    random.seed(time.time())
+    grid = [[AnimalType.EMPTY for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
+    animals = []
+
+    for _ in range(20):
+        while True:
+            x, y = random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1)
+            if grid[x][y] == AnimalType.EMPTY:
+                grid[x][y] = AnimalType.ZEBRA
+                animals.append(Zebra(x, y))
+                break
