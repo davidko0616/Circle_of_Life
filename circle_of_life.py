@@ -76,3 +76,11 @@ def main():
                 grid[x][y] = AnimalType.ZEBRA
                 animals.append(Zebra(x, y))
                 break
+
+    for _ in range(5):
+        while True:
+            x, y = random.randint(0, GRID_SIZE-1), random.randint(0, GRID_SIZE-1)
+            if grid[x][y] == AnimalType.EMPTY:
+                grid[x][y] = AnimalType.LION
+                animals.append(Lion(x, y))
+                break
