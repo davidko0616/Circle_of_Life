@@ -84,3 +84,25 @@ def main():
                 grid[x][y] = AnimalType.LION
                 animals.append(Lion(x, y))
                 break
+
+    time_step = 0
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"Time Step: {time_step}")
+        print_grid(grid)
+
+        zebras = sum(isinstance(a, Zebra) for a in animals)
+        lions = sum(isinstance(a, Lion) for a in animals)
+        print(f"Zebras: {zebras}, Lions: {lions}")
+
+        for animal in animals.copy():
+            if animal.alive:
+                animal.move(grid, animals)
+                animal.breed(grid, animals)
+
+        animals = [a for a in animals if a.alive]
+        time_step += 1
+        input("Press Enter...")
+
+if __name__ == "__main__":
+    main()
